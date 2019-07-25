@@ -30,3 +30,22 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compile group: 'uk.modl', name: 'java-interpreter', version: '0.0.10'
 }
+
+task docker(dependsOn: ['bootJar', 'buildInterpreter']) {
+	group = 'Docker'
+	description = 'Builds the required Docker images ready for `docker-compose up -d`'
+	doLast {
+		buildInterpreter
+	}
+}
+
+task buildInterpreter(type: Exec) {
+	group = 'Docker'
+	description = 'Builds the Java Interpreter docker image'
+	commandLine './build-interpreter.sh'
+	standardOutput = new ByteArrayOutputStream()
+
+	ext.output = {
+		return standardOutput.toString()
+	}
+}
