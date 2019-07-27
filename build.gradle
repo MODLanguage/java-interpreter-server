@@ -28,7 +28,7 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	compile group: 'uk.modl', name: 'java-interpreter', version: '0.0.10'
+	compile group: 'uk.modl', name: 'java-interpreter', version: '0.0.11'
 }
 
 task docker(dependsOn: ['bootJar', 'buildInterpreter']) {
