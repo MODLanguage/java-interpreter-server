@@ -2,7 +2,8 @@ version: '3.4'
 services:
 
   numapi:
-    image: numtwalmsley/modl-java-interpreter:latest
+    image: java-interpreter-server:latest
+    #image: numtechnology/java-interpreter-server:latest
     container_name: java-interpreter
     hostname: java-interpreter
     ports:

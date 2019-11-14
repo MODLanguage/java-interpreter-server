@@ -1,52 +1,116 @@
-plugins {
-	id 'org.springframework.boot' version '2.1.6.RELEASE'
-	id 'java'
+
+buildscript {
+
+	ext {
+		springBootVersion = '2.1.4.RELEASE'
+		springCloudVersion = 'Greenwich.SR1'
+		lombokVersion = '1.18.4'
+	}
+
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		jcenter()
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+
+	dependencies {
+		classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.21.0')
+	}
 }
 
+// plugin to add support for Java
+apply plugin: 'java'
+
+// plugin to add support for building an application
+apply plugin:'application'
+
+// plugin for IntelliJ support
+apply plugin: 'idea'
+
+// plugin for spring boot
+apply plugin:'org.springframework.boot'
+
+// plugin for spring boot dependency management
 apply plugin: 'io.spring.dependency-management'
+
+// plugin for building docker images
+apply plugin: 'com.palantir.docker'
 
 group = 'uk.num'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
-
-configurations {
-	developmentOnly
-	runtimeClasspath {
-		extendsFrom developmentOnly
-	}
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+mainClassName = 'uk.num.javainterpreterserver.Main'
 
 repositories {
 	mavenLocal()
 	mavenCentral()
+	jcenter()
+	maven {
+		url "https://plugins.gradle.org/m2/"
+	}
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// Spring boot core
+	compile('org.springframework.boot:spring-boot-starter-web')
+
+	// Spring boot endpoints (health, ...)
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+
+	// Dependency Injection
+	compile('javax.inject:javax.inject:1')
+
+	// https://mvnrepository.com/artifact/com.google.cloud/google-cloud-dns
+	compile group: 'com.google.cloud', name: 'google-cloud-dns', version: '0.102.0-alpha'
+
+	// Support for database
+	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+	implementation('org.springframework.boot:spring-boot-starter-jdbc')
+	implementation('mysql:mysql-connector-java')
+	runtimeOnly('com.h2database:h2')
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+	// Dependency and config for Lombok annotations
+	compile("org.projectlombok:lombok:${lombokVersion}")
+	annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+	testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+	// Logging
+	compile('ch.qos.logback.contrib:logback-jackson:0.1.5')
+	compile('ch.qos.logback.contrib:logback-json-classic:0.1.5')
+
+	// Use JUnit test framework
+	testImplementation 'junit:junit:4.12'
+
+	compile 'org.springframework.boot:spring-boot-devtools'
 	compile group: 'uk.modl', name: 'java-interpreter', version: '0.0.14'
 }
 
-task docker(dependsOn: ['bootJar', 'buildInterpreter']) {
-	group = 'Docker'
-	description = 'Builds the required Docker images ready for `docker-compose up -d`'
-	doLast {
-		buildInterpreter
-	}
+// ====== DOCKER ======
+task unpack(type: Copy) {
+	dependsOn bootJar
+	from(tasks.bootJar.outputs.files.singleFile)
+	into("build/dependency")
+	rename ("${rootProject.name}-${project.version}.jar", "app.jar")
 }
-
-task buildInterpreter(type: Exec) {
-	group = 'Docker'
-	description = 'Builds the Java Interpreter docker image'
-	commandLine './build-interpreter.sh'
-	standardOutput = new ByteArrayOutputStream()
-
-	ext.output = {
-		return standardOutput.toString()
-	}
+docker {
+	name "${bootJar.baseName}"
+	copySpec.from(tasks.unpack.outputs).into("/")
+	buildArgs(['DEPENDENCY': "dependency"])
 }
