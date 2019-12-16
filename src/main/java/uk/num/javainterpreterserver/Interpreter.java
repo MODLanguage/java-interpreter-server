@@ -9,13 +9,13 @@ import uk.modl.parser.printers.JsonPrinter;
 @RestController
 public class Interpreter {
 
-	@CrossOrigin(origins= "*")
+    @CrossOrigin(origins = "*")
     @GetMapping("*")
     public String interpretGet(@RequestParam("modl") final String modl) {
         return handler(modl);
     }
 
-	@CrossOrigin(origins= "*")
+    @CrossOrigin(origins = "*")
     @PostMapping("*")
     public String interpretPost(@RequestBody final String modl) {
         return handler(modl);
@@ -28,9 +28,13 @@ public class Interpreter {
                 modlObject = uk.modl.interpreter.Interpreter.interpret(modl);
             }
 
-            return JsonPrinter.printModl(modlObject);
+            if (modlObject != null) {
+                return JsonPrinter.printModl(modlObject);
+            } else {
+                return "";
+            }
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error processing the supplied MODL string", e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error processing the supplied MODL string: " + e);
         }
 
     }

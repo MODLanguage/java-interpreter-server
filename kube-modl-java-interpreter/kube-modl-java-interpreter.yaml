@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: modl-java-interpreter
+  name: modl-java-interpreter
+  namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: modl-java-interpreter
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: modl-java-interpreter
+    spec:
+      containers:
+        - image: '${trigger[''artifacts''][0][''reference'']}'
+          imagePullPolicy: Always
+          name: modl-java-interpreter
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 32m
+              memory: 256M
+            requests:
+              cpu: 32m
+              memory: 256M
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+        - name: dockerhub-imagepull
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+
