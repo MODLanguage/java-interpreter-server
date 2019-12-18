@@ -6,7 +6,7 @@ metadata:
   name: modl-java-interpreter
   namespace: test
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: modl-java-interpreter
@@ -29,18 +29,22 @@ spec:
               protocol: TCP
           resources:
             limits:
-              cpu: 128m
+              cpu: 250m
               memory: 256M
             requests:
-              cpu: 128m
+              cpu: 150m
               memory: 256M
-          terminationMessagePath: /dev/termination-log
-          terminationMessagePolicy: File
-      dnsPolicy: ClusterFirst
+          livenessProbe:
+            httpGet:
+              path: /status
+              port: 8080
+            initialDelaySeconds: 120
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 3
       imagePullSecrets:
         - name: dockerhub-imagepull
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
-

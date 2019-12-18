@@ -43,7 +43,7 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.palantir.docker'
 
 group = 'uk.num'
-version = '0.7'
+version = '0.9'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 mainClassName = 'uk.num.javainterpreterserver.Main'
@@ -99,7 +99,7 @@ dependencies {
 	testImplementation 'junit:junit:4.12'
 
 	compile 'org.springframework.boot:spring-boot-devtools'
-	compile group: 'uk.modl', name: 'java-interpreter', version: '0.0.16'
+	compile group: 'uk.modl', name: 'java-interpreter', version: '0.0.17'
 }
 
 // ====== DOCKER ======
