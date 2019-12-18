@@ -21,7 +21,7 @@ spec:
         app: modl-java-interpreter
     spec:
       containers:
-        - image: 'numtechnology/modl-java-interpreter:0.7'
+        - image: 'numtechnology/modl-java-interpreter:0.10'
           imagePullPolicy: Always
           name: modl-java-interpreter
           ports:
