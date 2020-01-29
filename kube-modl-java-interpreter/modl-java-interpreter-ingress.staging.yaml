@@ -9,7 +9,7 @@ metadata:
 spec:
   tls:
     - hosts:
-        - modl.test.numops.com
+        - modl.staging.numops.com
       secretName: modl-java-interpreter-ssl
   rules:
     - host: modl.staging.numops.com
