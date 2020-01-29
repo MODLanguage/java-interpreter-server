@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: modl-java-interpreter-ingress
+  namespace: staging
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+    - hosts:
+        - modl.test.numops.com
+      secretName: modl-java-interpreter-ssl
+  rules:
+    - host: modl.staging.numops.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: modl-java-interpreter
+              servicePort: 8080

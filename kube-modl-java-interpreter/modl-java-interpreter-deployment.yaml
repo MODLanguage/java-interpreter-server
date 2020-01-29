@@ -4,7 +4,7 @@ metadata:
   labels:
     app: modl-java-interpreter
   name: modl-java-interpreter
-  namespace: test
+  namespace: '${parameters.namespace}'
 spec:
   replicas: 2
   selector:
@@ -21,7 +21,7 @@ spec:
         app: modl-java-interpreter
     spec:
       containers:
-        - image: 'numtechnology/modl-java-interpreter:0.10'
+        - image: '${trigger[''artifacts''][0][''reference'']}'
           imagePullPolicy: Always
           name: modl-java-interpreter
           ports:
