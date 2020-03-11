@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: modl-java-interpreter-external-map
+  namespace: staging
+data:
+  spring.application.name: java-interpreter-server-external
