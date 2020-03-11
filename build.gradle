@@ -100,6 +100,9 @@ dependencies {
 
 	compile 'org.springframework.boot:spring-boot-devtools'
 	compile group: 'uk.modl', name: 'java-interpreter', version: '0.0.17'
+
+    // Eureka Spring client
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
 }
 
 // ====== DOCKER ======

@@ -6,5 +6,20 @@ services:
     #image: numtechnology/java-interpreter-server:latest
     container_name: java-interpreter
     hostname: java-interpreter
+    environment:
+      eureka.instance.hostname: eureka-server
+      eureka.instance.port: 8761
     ports:
       - 8080:8080
+
+  eureka-server:
+    image: numtechnology/eureka-server:latest
+    container_name: eureka-server
+    hostname: eureka-server
+    environment:
+      eureka.instance.hostname: eureka-server
+      eureka.instance.port: 8761
+    tty: false
+    ports:
+      - 8761:8761
+
