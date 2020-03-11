@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: modl-java-interpreter
+  name: modl-java-interpreter
+  namespace: prod
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: modl-java-interpreter
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: modl-java-interpreter
+    spec:
+      containers:
+        - image: '${#stage(''Find Image from Staging'')[''outputs''][''artifacts''][0][''reference'']}'
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /status
+              port: 8080
+            initialDelaySeconds: 120
+            periodSeconds: 3
+          name: modl-java-interpreter
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          resources:
+            limits:
+              cpu: 250m
+              memory: 256M
+            requests:
+              cpu: 150m
+              memory: 256M
+      imagePullSecrets:
+        - name: dockerhub-imagepull

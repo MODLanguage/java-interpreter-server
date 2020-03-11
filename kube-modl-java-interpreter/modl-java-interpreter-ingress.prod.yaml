@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - modl.prod.numops.com
+        - interpreter.modl.uk
       secretName: modl-java-interpreter-ssl
   rules:
-    - host: modl.prod.numops.com
+    - host: interpreter.modl.uk
       http:
         paths:
           - path: /
