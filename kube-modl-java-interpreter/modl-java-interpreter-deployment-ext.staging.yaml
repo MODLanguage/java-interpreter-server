@@ -21,7 +21,10 @@ spec:
         app: modl-java-interpreter-external
     spec:
       containers:
-        - image: '${trigger[''artifacts''][0][''reference'']}'
+        - envFrom:
+            - configMapRef:
+                name: eureka-map
+          image: '${trigger[''artifacts''][0][''reference'']}'
           livenessProbe:
             httpGet:
               path: /status
