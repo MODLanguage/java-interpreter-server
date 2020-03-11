@@ -17,5 +17,5 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: modl-java-interpreter
+              serviceName: modl-java-interpreter-external
               servicePort: 8080

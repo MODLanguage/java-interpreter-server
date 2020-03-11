@@ -22,7 +22,6 @@ spec:
     spec:
       containers:
         - image: '${#stage(''Find Image from Staging'')[''outputs''][''artifacts''][0][''reference'']}'
-          imagePullPolicy: Always
           livenessProbe:
             httpGet:
               path: /status

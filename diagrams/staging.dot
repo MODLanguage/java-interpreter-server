@@ -1,0 +1,8 @@
+digraph staging {
+    api_gw -> modl_java_interpreter;
+    cust_web_app -> api_gw;
+    ingress -> modl_java_interpreter_external;
+    Record_viewer -> ingress;
+    modl_java_interpreter-> java_interpreter_lib;
+    modl_java_interpreter_external-> java_interpreter_lib;
+}

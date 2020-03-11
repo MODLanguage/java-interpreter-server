@@ -22,7 +22,6 @@ spec:
     spec:
       containers:
         - image: '${trigger[''artifacts''][0][''reference'']}'
-          imagePullPolicy: Always
           livenessProbe:
             httpGet:
               path: /status
