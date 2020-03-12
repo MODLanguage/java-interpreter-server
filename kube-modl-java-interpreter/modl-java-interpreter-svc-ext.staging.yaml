@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: modl-java-interpreter-external
+  name: modl-java-interpreter-external
+  namespace: staging
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: modl-java-interpreter-external
+  sessionAffinity: None
+  type: ClusterIP
