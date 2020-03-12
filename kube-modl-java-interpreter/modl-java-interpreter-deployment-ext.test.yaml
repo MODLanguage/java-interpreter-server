@@ -4,7 +4,7 @@ metadata:
   labels:
     app: modl-java-interpreter-external
   name: modl-java-interpreter-external
-  namespace: staging
+  namespace: test
 spec:
   replicas: 2
   selector:
