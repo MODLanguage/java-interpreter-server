@@ -105,6 +105,16 @@ dependencies {
     compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
 }
 
+// does a boot jar but renames it for easier to find the application file when building the docker image
+task bootJarRename(type: Copy) {
+    group("build")
+    dependsOn bootJar
+    from ('build/libs/')
+    include ("${rootProject.name}-${project.version}.jar")
+    destinationDir file('build/libs/')
+    rename ("${rootProject.name}-${project.version}.jar", "app.jar")
+}
+
 // ====== DOCKER ======
 task unpack(type: Copy) {
 	dependsOn bootJar
