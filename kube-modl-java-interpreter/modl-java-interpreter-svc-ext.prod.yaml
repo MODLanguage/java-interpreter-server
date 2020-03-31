@@ -7,10 +7,10 @@ metadata:
   namespace: prod
 spec:
   ports:
-    - port: 8080
+    - port: 80
       protocol: TCP
       targetPort: 8080
   selector:
     app: modl-java-interpreter-external
   sessionAffinity: None
-  type: ClusterIP
+  type: LoadBalancer
