@@ -9,11 +9,13 @@ import uk.modl.parser.printers.JsonPrinter;
 @RestController
 public class Interpreter {
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/")
     public String interpretGet(@RequestParam("modl") final String modl) {
         return handler(modl);
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/")
     public String interpretPost(@RequestBody final String modl) {
         return handler(modl);
@@ -36,4 +38,15 @@ public class Interpreter {
         }
 
     }
+
+    @GetMapping("/internal/")
+    public String interpretInternalGet(@RequestParam("modl") final String modl) {
+        return handler(modl);
+    }
+
+    @PostMapping("/internal/")
+    public String interpretInternalPost(@RequestBody final String modl) {
+        return handler(modl);
+    }
+
 }
