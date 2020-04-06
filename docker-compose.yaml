@@ -1,25 +1,24 @@
 version: '3.4'
 services:
 
-  numapi:
+  customer-api-gw:
+    image: customer-api-gateway:latest
+    container_name: customer-api-gw
+    hostname: customer-api-gw
+    environment:
+      logging.config: classpath:logback-classic.xml
+      oauth.clientId: NUM
+      oauth.clientSecret: 1288392-192982-377283-282873
+      oauth.checkTokenUri: http://auth-server:8080/oauth/check_token
+    ports:
+      - 8080:8080
+
+  java-interpreter-server:
     image: java-interpreter-server:latest
-    #image: numtechnology/java-interpreter-server:latest
     container_name: java-interpreter
     hostname: java-interpreter
     environment:
       eureka.instance.hostname: eureka-server
       eureka.instance.port: 8761
     ports:
-      - 8080:8080
-
-  eureka-server:
-    image: numtechnology/eureka-server:latest
-    container_name: eureka-server
-    hostname: eureka-server
-    environment:
-      eureka.instance.hostname: eureka-server
-      eureka.instance.port: 8761
-    tty: false
-    ports:
-      - 8761:8761
-
+      - 8081:8080

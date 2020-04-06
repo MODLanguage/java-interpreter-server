@@ -99,8 +99,8 @@ dependencies {
 	testImplementation 'junit:junit:4.12'
 
 	compile 'org.springframework.boot:spring-boot-devtools'
+    implementation 'uk.num:json-to-modl-java-library:0.5'
 	compile group: 'uk.modl', name: 'java-interpreter', version: '0.0.19'
-
 }
 
 // does a boot jar but renames it for easier to find the application file when building the docker image
