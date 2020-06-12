@@ -3,11 +3,11 @@ package uk.num.javainterpreterserver;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import uk.modl.modlObject.ModlObject;
-import uk.modl.parser.printers.JsonPrinter;
 
 @RestController
 public class Interpreter {
+
+    private final uk.modl.interpreter.Interpreter interpreter = new uk.modl.interpreter.Interpreter();
 
     @CrossOrigin(origins = "*")
     @GetMapping("/mtoj")
@@ -22,14 +22,14 @@ public class Interpreter {
     }
 
     private String handler(final String modl) {
-        ModlObject modlObject = null;
+        String jsonString = null;
         try {
             if (modl != null) {
-                modlObject = uk.modl.interpreter.Interpreter.interpret(modl);
+                jsonString = interpreter.interpretToJsonString(modl);
             }
 
-            if (modlObject != null) {
-                return JsonPrinter.printModl(modlObject);
+            if (jsonString != null) {
+                return jsonString;
             } else {
                 return "";
             }
