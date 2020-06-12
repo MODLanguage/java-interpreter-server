@@ -21,10 +21,7 @@ spec:
         app: modl-java-interpreter
     spec:
       containers:
-        - envFrom:
-            - configMapRef:
-                name: eureka-map
-          image: '${trigger[''artifacts''][0][''reference'']}'
+        - image: '${trigger[''artifacts''][0][''reference'']}'
           imagePullPolicy: Always
           livenessProbe:
             httpGet:

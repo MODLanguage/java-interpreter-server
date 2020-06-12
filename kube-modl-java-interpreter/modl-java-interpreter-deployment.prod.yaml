@@ -21,10 +21,7 @@ spec:
         app: modl-java-interpreter
     spec:
       containers:
-        - envFrom:
-            - configMapRef:
-                name: eureka-map
-          image: '${#stage(''Find Image from Staging'')[''outputs''][''artifacts''][0][''reference'']}'
+        - image: '${#stage(''Find Image from Staging'')[''outputs''][''artifacts''][0][''reference'']}'
           imagePullPolicy: Always
           livenessProbe:
             httpGet:

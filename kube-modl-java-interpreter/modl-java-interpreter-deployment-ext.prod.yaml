@@ -23,8 +23,6 @@ spec:
       containers:
         - envFrom:
             - configMapRef:
-                name: eureka-map
-            - configMapRef:
                 name: modl-java-interpreter-external-map
           image: '${#stage(''Find Image from Staging'')[''outputs''][''artifacts''][0][''reference'']}'
           livenessProbe:

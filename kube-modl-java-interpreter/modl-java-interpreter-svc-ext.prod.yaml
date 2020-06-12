@@ -5,11 +5,20 @@ metadata:
     app: modl-java-interpreter-external
   name: modl-java-interpreter-external
   namespace: prod
+  annotations:
+     service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:eu-west-1:732328896604:certificate/39c0387e-bab6-48a2-a7bd-a177a6adce84
+     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+     service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
 spec:
   ports:
-    - port: 443
+    - name: https
+      port: 443
       protocol: TCP
       targetPort: 8080
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 8080   
   selector:
     app: modl-java-interpreter-external
   sessionAffinity: None
