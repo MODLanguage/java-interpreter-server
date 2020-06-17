@@ -4,8 +4,10 @@ Exposes the Java Interpreter as an HTTP GET/POST endpoint inside a Spring Boot a
 # Example invocations using curl
 
 ```text
-curl -X GET http://localhost:8080/?modl=a=b
-
-curl -d "a=b" -X POST http://localhost:8080/
-
+curl --location --request POST 'http://localhost:8080/mtoj' \
+    --header 'Content-Type: text/plain' \
+    --data-raw 'a=b'
+```
+```text
+http://localhost:8080/mtoj?modl=a=b
 ```
