@@ -44,9 +44,9 @@ spec:
           resources:
             limits:
               cpu: 250m
-              memory: 256M
+              memory: 384M
             requests:
               cpu: 150m
-              memory: 256M
+              memory: 384M
       imagePullSecrets:
         - name: dockerhub-imagepull
