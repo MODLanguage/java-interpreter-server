@@ -1,10 +1,12 @@
 package uk.num.javainterpreterserver;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
+@Log4j2
 public class Interpreter {
 
     private final uk.modl.interpreter.Interpreter interpreter = new uk.modl.interpreter.Interpreter();
@@ -25,7 +27,10 @@ public class Interpreter {
         String jsonString = null;
         try {
             if (modl != null) {
+                final long start = System.currentTimeMillis();
                 jsonString = interpreter.interpretToJsonString(modl);
+                final long end = System.currentTimeMillis();
+                log.info(String.format("Took %dms to interpret %s", (end - start), modl));
             }
 
             if (jsonString != null) {
