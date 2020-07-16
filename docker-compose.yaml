@@ -17,8 +17,5 @@ services:
     image: java-interpreter-server:latest
     container_name: java-interpreter
     hostname: java-interpreter
-    environment:
-      eureka.instance.hostname: eureka-server
-      eureka.instance.port: 8761
     ports:
       - 8081:8080
