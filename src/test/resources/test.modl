@@ -1,1 +1,1 @@
-*l="https://modules.num.uk/1/rcf.txt";_n=1;hours(original[d@8-20@LON;7@9-18];days[(date=2019-12-13;available[`08:00:00-20:00:00`]);(date=2019-12-14;available[`08:00:00-20:00:00`]);(date=2019-12-15;available[`09:00:00-18:00:00`])])
+*l="https://modules.num.uk/1/rcf.txt";@n=1;hours(original[d@8-20@LON;7@9-18];days[(date=2019-12-13;available[`08:00:00-20:00:00`]);(date=2019-12-14;available[`08:00:00-20:00:00`]);(date=2019-12-15;available[`09:00:00-18:00:00`])])

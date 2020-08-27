@@ -10,6 +10,8 @@ import org.springframework.web.server.ResponseStatusException;
 @Log4j2
 public class Interpreter {
 
+    public static final int MAX_WIDTH = 100;
+
     public final int MAX_NUM_RECORD_LEN = 25500;
 
     private final uk.modl.interpreter.Interpreter interpreter = new uk.modl.interpreter.Interpreter();
@@ -36,7 +38,7 @@ public class Interpreter {
 
                 jsonString = interpreter.interpretToJsonString(truncated);
                 final long end = System.currentTimeMillis();
-                log.info(String.format("Took %dms to interpret %s", (end - start), modl));
+                log.info(String.format("Took %dms to interpret %s", (end - start), StringUtils.truncate(modl, MAX_WIDTH)));
             }
 
             if (jsonString != null) {
