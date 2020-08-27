@@ -36,7 +36,7 @@ public class Interpreter {
 
                 final String truncated = StringUtils.truncate(modl, MAX_NUM_RECORD_LEN);
 
-                jsonString = interpreter.interpretToJsonString(truncated);
+                jsonString = interpreter.interpretToJsonString(truncated, null);
                 final long end = System.currentTimeMillis();
                 log.info(String.format("Took %dms to interpret %s", (end - start), StringUtils.truncate(modl, MAX_WIDTH)));
             }
