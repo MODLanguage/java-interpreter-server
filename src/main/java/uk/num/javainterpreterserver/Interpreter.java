@@ -38,7 +38,7 @@ public class Interpreter {
 
                 jsonString = interpreter.interpretToJsonString(truncated, null);
                 final long end = System.currentTimeMillis();
-                log.info(String.format("Took %dms to interpret %s", (end - start), StringUtils.truncate(modl, MAX_WIDTH)));
+                log.info(String.format("Took %dms to interpret %s", (end - start), StringUtils.truncate(modl, MAX_WIDTH) + "..."));
             }
 
             if (jsonString != null) {
@@ -48,6 +48,9 @@ public class Interpreter {
             }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error processing the supplied MODL string: " + e);
+        } catch (final Error e) {
+            log.error("Aborting the request because a serious error has occurred interpreting this: '{}'", StringUtils.truncate(modl, MAX_WIDTH) + "...");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Internal Error processing the supplied MODL string. Try simplifying your MODL.");
         }
 
     }
