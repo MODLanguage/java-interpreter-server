@@ -2,6 +2,9 @@ spring:
   application:
     name: java-interpreter-server
 
+interpreter:
+  timeoutMilliseconds: 5000
+
 eureka:
   instance:
     # this is expected to be overridden with the value of the environment
