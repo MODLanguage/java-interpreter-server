@@ -2,7 +2,9 @@ version: '3.4'
 services:
 
   customer-api-gw:
+    # NOTE: You will want to build this one locally or use numtechnology/customer-application:latest
     image: customer-api-gateway:latest
+    #image:  numtechnology/customer-api-gateway:latest
     container_name: customer-api-gw
     hostname: customer-api-gw
     environment:
@@ -10,12 +12,19 @@ services:
       oauth.clientId: NUM
       oauth.clientSecret: 1288392-192982-377283-282873
       oauth.checkTokenUri: http://auth-server:8080/oauth/check_token
+      rate-limiting-json-file-location: /config/rate-limiting.json
     ports:
-      - 8080:8080
+      - 8081:8080
+    volumes:
+      - ./config/rate-limiting.json:/config/rate-limiting.json
 
   java-interpreter-server:
     image: java-interpreter-server:latest
     container_name: java-interpreter
     hostname: java-interpreter
+    environment:
+      interpreter.timeoutMilliseconds: 5000
     ports:
-      - 8081:8080
+      - 8080:8080
+    volumes:
+      - ./config/:/config

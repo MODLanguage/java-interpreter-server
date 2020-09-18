@@ -56,7 +56,7 @@ public class Interpreter {
                     .equals("Interpreter Error: java.util.concurrent.TimeoutException")) {
                 log.info("Aborting the request because it was taking too long to process: '{}'", StringUtils.truncate(modl, MAX_WIDTH) + "...");
             } else {
-                log.info("Aborting the request because a serious error has occurred interpreting this: '{}'", StringUtils.truncate(modl, MAX_WIDTH) + "...");
+                log.info("Aborting the request because a serious error has occurred interpreting this: '{}'", StringUtils.truncate(modl, MAX_WIDTH) + "... " + e.getMessage());
             }
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Internal Error processing the supplied MODL string. Try simplifying your MODL.");
         } catch (Exception e) {
