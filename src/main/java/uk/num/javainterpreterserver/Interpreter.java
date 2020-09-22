@@ -1,6 +1,7 @@
 package uk.num.javainterpreterserver;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +20,7 @@ public class Interpreter {
 
     private final uk.modl.interpreter.Interpreter interpreter = new uk.modl.interpreter.Interpreter();
 
+    @Setter
     @Value("${interpreter.timeoutMilliseconds}")
     private int timeoutMilliseconds = 5000;
 
