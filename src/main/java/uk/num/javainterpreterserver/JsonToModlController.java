@@ -37,7 +37,8 @@ public class JsonToModlController {
     private ResponseEntity<String> handler(final String json) {
         try {
             final long start = System.currentTimeMillis();
-            final String modl = converter.pairToModl(json);
+            final String modl = converter.pairToModl(json)
+                    .replaceAll("\\\\", "\\\\\\\\");
             final long end = System.currentTimeMillis();
             log.info(String.format("Took %dms to convert to %s", (end - start), modl));
 

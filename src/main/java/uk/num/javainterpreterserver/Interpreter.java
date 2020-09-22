@@ -1,5 +1,6 @@
 package uk.num.javainterpreterserver;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,12 +15,12 @@ public class Interpreter {
 
     public static final int MAX_WIDTH = 100;
 
-    @Value("${interpreter.timeoutMilliseconds}")
-    private int timeoutMilliseconds = 5000;
-
     public final int MAX_NUM_RECORD_LEN = 25500;
 
     private final uk.modl.interpreter.Interpreter interpreter = new uk.modl.interpreter.Interpreter();
+
+    @Value("${interpreter.timeoutMilliseconds}")
+    private int timeoutMilliseconds = 5000;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/mtoj")
@@ -51,16 +52,18 @@ public class Interpreter {
             } else {
                 return "";
             }
-        } catch (final InterpreterError | Error e) {
+        } catch (final InterpreterError | Error | JsonProcessingException e) {
             if (e.getMessage()
-                    .equals("Interpreter Error: java.util.concurrent.TimeoutException")) {
+                    .contains("java.util.concurrent.TimeoutException")) {
                 log.info("Aborting the request because it was taking too long to process: '{}'", StringUtils.truncate(modl, MAX_WIDTH) + "...");
-            } else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Internal Error processing the supplied MODL string. Try simplifying your MODL.");
+            } else if (e.getMessage()
+                    .contains("java.lang.StackOverflowError")) {
                 log.info("Aborting the request because a serious error has occurred interpreting this: '{}'", StringUtils.truncate(modl, MAX_WIDTH) + "... " + e.getMessage());
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Internal Error processing the supplied MODL string. Try simplifying your MODL.");
+            } else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error processing the supplied MODL string: " + e);
             }
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Internal Error processing the supplied MODL string. Try simplifying your MODL.");
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error processing the supplied MODL string: " + e);
         }
 
     }
