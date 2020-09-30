@@ -95,7 +95,7 @@ dependencies {
 
 	compile 'org.springframework.boot:spring-boot-devtools'
     implementation 'uk.num:json-to-modl-java-library:0.8'
-	compile group: 'uk.modl', name: 'java-interpreter', version: '0.1.19'
+	compile group: 'uk.modl', name: 'java-interpreter', version: '0.1.20'
 
 	// metrics
 	runtime('io.micrometer:micrometer-core:1.5.4')
