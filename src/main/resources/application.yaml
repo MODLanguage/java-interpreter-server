@@ -19,3 +19,46 @@ eureka:
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  endpoint:
+    auditevents:
+      enabled: false
+    beans:
+      enabled: false
+    caches:
+      enabled: false
+    features:
+      enabled: false
+    conditions:
+      enabled: false
+    configprops:
+      enabled: false
+    env:
+      enabled: false
+    heapdump:
+      enabled: false
+    info:
+      enabled: false
+    integrationgraph:
+      enabled: false
+    logfile:
+      enabled: false
+    loggers:
+      enabled: false
+    mappings:
+      enabled: false
+    metrics:
+      enabled: true
+    refresh:
+      enabled: false
+    scheduledtasks:
+      enabled: false
+    threaddump:
+      enabled: false
+  trace:
+    http:
+      enabled: true

@@ -19,6 +19,10 @@ spec:
     metadata:
       labels:
         app: modl-java-interpreter
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: "8080"
     spec:
       containers:
         - image: '${#stage(''Find Image from Staging'')[''outputs''][''artifacts''][0][''reference'']}'

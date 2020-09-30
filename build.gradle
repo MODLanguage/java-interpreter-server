@@ -96,6 +96,10 @@ dependencies {
 	compile 'org.springframework.boot:spring-boot-devtools'
     implementation 'uk.num:json-to-modl-java-library:0.8'
 	compile group: 'uk.modl', name: 'java-interpreter', version: '0.1.19'
+
+	// metrics
+	runtime('io.micrometer:micrometer-core:1.5.4')
+	runtime('io.micrometer:micrometer-registry-prometheus:1.5.4')
 }
 
 // does a boot jar but renames it for easier to find the application file when building the docker image
