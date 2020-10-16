@@ -55,11 +55,11 @@ public class Interpreter {
                 return "";
             }
         } catch (final InterpreterError | Error | JsonProcessingException e) {
-            if (e.getMessage()
+            if (e.getMessage() != null && e.getMessage()
                     .contains("java.util.concurrent.TimeoutException")) {
                 log.info("Aborting the request because it was taking too long to process: '{}'", StringUtils.truncate(modl, MAX_WIDTH) + "...");
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Internal Error processing the supplied MODL string. Try simplifying your MODL.");
-            } else if (e.getMessage()
+            } else if (e.getMessage() != null && e.getMessage()
                     .contains("java.lang.StackOverflowError")) {
                 log.info("Aborting the request because a serious error has occurred interpreting this: '{}'", StringUtils.truncate(modl, MAX_WIDTH) + "... " + e.getMessage());
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Internal Error processing the supplied MODL string. Try simplifying your MODL.");
