@@ -1,6 +1,7 @@
 package uk.num.javainterpreterserver;
 
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +44,7 @@ public class JsonToModlController {
             log.info(String.format("Took %dms to convert to %s", (end - start), modl));
 
             return ResponseEntity.ok()
-                    .body("{\"modl\":\"" + modl + "\"}");
+                    .body("{\"modl\":\"" + StringEscapeUtils.escapeJava(modl) + "\"}");
         } catch (final Throwable e) {
             log.error("Error converting JSON to MODL.", e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
