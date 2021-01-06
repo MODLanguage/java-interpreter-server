@@ -2,22 +2,24 @@ spring:
   application:
     name: java-interpreter-server
 
+server:
+  port: 8080
+  error:
+    include-stacktrace: never
+  servlet:
+    context-path: /
+
 interpreter:
   timeoutMilliseconds: 5000
 
-eureka:
-  instance:
-    # this is expected to be overridden with the value of the environment
-    # it will work fine if eureka server is running on the local machine though
-    hostname: localhost
-    port: 8761
-    preferIpAddress: true
-
-  client:
-    registerWithEureka: true
-    fetchRegistry: true
-    serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+logging:
+  config: classpath:logback-json.xml
+  level:
+    uk:
+      num:
+        auth: INFO
+  org:
+    springframework: INFO
 
 management:
   endpoints:

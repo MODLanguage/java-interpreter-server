@@ -39,13 +39,13 @@ public class JsonToModlController {
         try {
             final long start = System.currentTimeMillis();
             final String modl = converter.pairToModl(json)
-                    .replaceAll("\\\\", "\\\\\\\\");
+                    .replace("\\", "\\\\");
             final long end = System.currentTimeMillis();
             log.info(String.format("Took %dms to convert to %s", (end - start), modl));
 
             return ResponseEntity.ok()
                     .body("{\"modl\":\"" + StringEscapeUtils.escapeJava(modl) + "\"}");
-        } catch (final Throwable e) {
+        } catch (final Exception e) {
             log.error("Error converting JSON to MODL.", e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .build();

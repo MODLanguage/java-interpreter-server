@@ -1,0 +1,53 @@
+{
+  "defaultConfig": {
+    "path": "default",
+    "overdraft": "600",
+    "tokens": "600",
+    "seconds": "60"
+  },
+  "configs": [
+    {
+      "path": "/api/v1/doh/dns-query",
+      "overdraft": "1500",
+      "tokens": "1500",
+      "seconds": "60"
+    },
+    {
+      "path": "/api/v1/auth/public/sign-up",
+      "overdraft": "6",
+      "tokens": "6",
+      "seconds": "60"
+    },
+    {
+      "path": "/api/v1/auth/public/reset-forgotten-password",
+      "overdraft": "6",
+      "tokens": "6",
+      "seconds": "60"
+    },
+    {
+      "path": "/api/v1/auth/public/send-username",
+      "overdraft": "6",
+      "tokens": "6",
+      "seconds": "60"
+    },
+    {
+      "path": "/api/v1/auth/public/send-pwd-reset-verification",
+      "overdraft": "6",
+      "tokens": "6",
+      "seconds": "60"
+    },
+    {
+      "path": "/api/v1/auth/public/resend-signup-email",
+      "overdraft": "6",
+      "tokens": "6",
+      "seconds": "60"
+    }
+  ],
+  "whitelist": [
+    "82.69.96.201",
+    "5.253.253.73",
+    "5.253.253.60",
+    "81.97.229.61",
+    "127.0.0.1"
+  ]
+}

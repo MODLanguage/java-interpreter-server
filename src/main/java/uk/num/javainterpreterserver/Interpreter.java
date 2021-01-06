@@ -16,9 +16,9 @@ public class Interpreter {
 
     public static final int MAX_WIDTH = 100;
 
-    public final int MAX_NUM_RECORD_LEN = 25500;
+    public static final int MAX_NUM_RECORD_LEN = 25500;
 
-    private final uk.modl.interpreter.Interpreter interpreter = new uk.modl.interpreter.Interpreter();
+    private final uk.modl.interpreter.Interpreter modlInterpreter = new uk.modl.interpreter.Interpreter();
 
     @Setter
     @Value("${interpreter.timeoutMilliseconds}")
@@ -44,7 +44,7 @@ public class Interpreter {
 
                 final String truncated = StringUtils.truncate(modl, MAX_NUM_RECORD_LEN);
 
-                jsonString = interpreter.interpretToJsonString(truncated, null, timeoutMilliseconds);
+                jsonString = modlInterpreter.interpretToJsonString(truncated, null, timeoutMilliseconds);
                 final long end = System.currentTimeMillis();
                 log.info(String.format("Took %dms to interpret %s", (end - start), StringUtils.truncate(modl, MAX_WIDTH) + "..."));
             }

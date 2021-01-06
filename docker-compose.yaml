@@ -1,6 +1,5 @@
-version: '3.4'
+version: "3.4"
 services:
-
   customer-api-gw:
     # NOTE: You will want to build this one locally or use numtechnology/customer-application:latest
     image: customer-api-gateway:latest
@@ -8,7 +7,7 @@ services:
     container_name: customer-api-gw
     hostname: customer-api-gw
     environment:
-      logging.config: classpath:logback-classic.xml
+      #logging.config: classpath:logback-classic.xml
       oauth.clientId: NUM
       oauth.clientSecret: 1288392-192982-377283-282873
       oauth.checkTokenUri: http://auth-server:8080/oauth/check_token
