@@ -94,7 +94,7 @@ dependencies {
 	testImplementation 'junit:junit:4.12'
 
 	compile 'org.springframework.boot:spring-boot-devtools'
-    implementation 'uk.num:json-to-modl-java-library:0.9'
+    implementation 'uk.num:json-to-modl-java-library:0.10'
 	compile group: 'uk.modl', name: 'java-interpreter', version: '0.1.26'
 
 	// metrics
